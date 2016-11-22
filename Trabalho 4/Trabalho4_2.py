@@ -149,7 +149,7 @@ lb2.pack()
 ed1.pack()
 bt1.pack()
 
-Janela.title("Linguagens Formais & Autômatos ")
+Janela.title("Linguagens Formais & Autômatos - Trabalho #4")
 #  Largura x Altura + Esquerda + Topo
-Janela.geometry("560x510+300+100")
+Janela.geometry("560x310+300+100")
 Janela.mainloop()

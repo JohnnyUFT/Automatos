@@ -157,13 +157,13 @@ def fEstendida(estado, palavra):
 Janela = tk.Tk()  # instancia da Janela Principal (mainWindow)
 
 #  principais frames (conteiners) da tela principal
-frame1 = Frame(Janela, height=100, bg="brown")
+frame1 = Frame(Janela, height=100, bg="")
 frame1.pack()
 
 #  configuração de fonte, permanente para labels e outros
 fonte1 = ('Ubuntu', '10')
 lb1 = Label(frame1, text='UNIVERSIDADE FEDERAL DO TOCANTINS \n Ciência da Computação',
-            font=('Ubuntu', '12', 'bold'), height=6, bg="white")
+            font=('Ubuntu', '12', 'bold'), height=6)
 
 
 lb2 = Label(frame1, text="Entrada (palavra): ", font=fonte1)
@@ -176,7 +176,7 @@ lb2.pack()
 ed1.pack()
 bt1.pack()
 
-Janela.title("Linguagens Formais & Autômatos ")
+Janela.title("Linguagens Formais & Autômatos - Trabalho #2")
 #  Largura x Altura + Esquerda + Topo
-Janela.geometry("560x510+300+100")
+Janela.geometry("560x310+300+100")
 Janela.mainloop()

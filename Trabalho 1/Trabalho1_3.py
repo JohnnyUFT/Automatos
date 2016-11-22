@@ -231,7 +231,7 @@ bt1.grid(row=1, column=1)
 lb4.grid(row=2, column=0, stick=W)
 lbox1.grid(row=3, column=0)
 #text1.grid(row=3, column=0)
-bt2.grid(row=4, column=0)  # ATENÇÃO!!! e as linhas do listbox? resp: não interferem nesta "contagem"
+bt2.grid(row=4, column=0)  # e as linhas do listbox? resp: não interferem nesta "contagem"
 lb5.grid(row=5, column=0, stick=W)
 ed2.grid(row=6, column=0)
 bt3.grid(row=6, column=1)
@@ -239,7 +239,7 @@ bt4.grid(row=7, column=0, stick=W)  # cuidar com as disposições destes botões
 bt5.grid(row=7, column=1)
 bt6.grid(row=7, column=2, stick=E)
 
-Janela.title("Linguagens Formais & Autômatos ")
+Janela.title("Linguagens Formais & Autômatos - Trabalho #1")
 #  Largura x Altura + Esquerda + Topo
 Janela.geometry("560x510+300+100")
 Janela.mainloop()
