@@ -1,38 +1,46 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3.5
 # -*- coding: utf-8 -*-
 
 """
 author: Eufrázio Alexandre & Johnny Pereira
-email: johnnyuft@gmail.com
-last modified: October 2016
+email: (eufrazius,johnnyuft)@gmail.com
+last modified: November 2016
 
 """
 
-from Tkinter import *
-import Tkinter as tk
-import tkMessageBox
+from tkinter import *
+import tkinter as tk
+from tkinter import messagebox
 import string
 import sys
 
-# --------------
-# PALAVRA SOBRE E={a,b} QUE POSSUAM 'a' COMO ANTEPENÚLTIMO SÍMBOLO
-# --------------
+"""
+PALAVRA SOBRE E={a,b} QUE POSSUAM 'a' COMO ANTEPENÚLTIMO SÍMBOLO.
 
-# -------------
-# Implementar a função de transição e
-# ------------- função de transição estendida
-# -------------
+Implementar a função de transição e função de transição estendida.
+"""
 
-# método que captura a entrada do usuário
 def getEntrada():
+    """
+    Método que captura a entrada do usuário.
+    :return:
+    """
     palavra = ed1.get()
     print("Palavra informada "+palavra)
     Automato(palavra)
 
 def Automato(palavra):
-    # chamada para Função de Transição
-    estadoAtual = fTransicao('q2','a')
-    print("Retornou %s\n"%estadoAtual)
+    """
+    Envia a palavra recebida para ser testado pelo autômato.
+
+    De acordo com o retorno da função de transição estendida,
+    que é chamada aqui, informa se a palavra inserida é aceitável
+    ou não, a depender das regras impostas pela linguagem que foi proposta.
+    :param palavra:
+    :return:
+    """
+    #estadoAtual = fTransicao('q0','a')
+    #print("Retornou %s\n"%estadoAtual)
 
     # chamada para Função de Transição Estendida
     estadoFinal = fEstendida('q0', palavra)
@@ -40,17 +48,24 @@ def Automato(palavra):
     # teste dispensável
     print("Estado Final: %s"%estadoFinal)
 
-    # teste final:
+    # verificação final:
     if((estadoFinal == 'q4') or (estadoFinal == 'q5') or (estadoFinal == 'q6') or (estadoFinal == 'q7')):
-        #print("Palavra aceita pela linguagem ")
-        tkMessageBox.showinfo("Info", "palavra aceita! ")
+        messagebox.showinfo("Info", "palavra aceita! ")
     else:
-        #print("Palavra rejeitada pela linguagem ")
-        tkMessageBox.showerror("Erro", "palavra rejeitada! ")
+        messagebox.showerror("Erro", "palavra rejeitada! ")
 
 
-# implementação da Função de Transição
+#
 def fTransicao(estado, simbolo):
+    """
+    Função de Transição.
+
+    Aqui é implementado o autômato tal como se vê no diagrama,
+    ou na tabela de transições.
+    :param estado:
+    :param simbolo:
+    :return: estado
+    """
     if(estado=='q0'):
         if(simbolo=='a'):
             return 'q1'
@@ -114,6 +129,16 @@ def fTransicao(estado, simbolo):
 
 # implementação da Função de Transição Estendida
 def fEstendida(estado, palavra):
+    """
+    Função de Transição Estendida.
+
+    Como se sabe, recebe um estado e uma palavra,
+    faz uso da função de transição para cada símbolo lido na palavra,
+    possui caráter recursivo.
+    :param estado:
+    :param palavra:
+    :return: estado
+    """
     # teste dispensável
     print("Estado Atual: %s - Palavra atual: %s "%(estado, palavra))
     # Base
