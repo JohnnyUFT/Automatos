@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3.5
 # -*- coding: utf-8 -*-
 
 """
@@ -9,23 +9,20 @@ last modified: November 2016
 """
 from lib2to3.pgen2.tokenize import Whitespace
 
-from Tkinter import *
-import Tkinter as tk
-import tkMessageBox
+from tkinter import *
+import tkinter as tk
+from tkinter import messagebox
 import string
 
-
-#  Definições de funções e métodos a serem usados ao longo do programa
-#  Transferir esta coleção de métodos para outro arquivo, desta forma fica mais organizado
-#  Dividir tudo em funções pequenas, que executam passos simples de cada vez
-
-#  MÉTODOS A SEREM IMPLEMENTADOS NUMA CLASSE BEM DEFINIDA (Object Oriented)
-
-#  método que recebe os alfabetos inseridos no "Entry"
-
-#  método que abstrai/simula o autômato
-
 def automato():
+    """
+    Recebe a palavra informada, sem espaços e a envia para processamento em 'q0'.
+
+    Este método trabalha como se fosse o método principal
+    do projeto, ele recebe a palavra, já trabalhada sobre os espaços e envia a mesma
+    para a função que verifica se há repetições, estando tudo certo, envia a palavra para estado 'q0'.
+    :return:
+    """
     alfabeto1 = removeSpace() # remove os espaços em branco
     repetidos = verRepeticao(alfabeto1) # verifica repetição de símbolos
     if(not repetidos):
@@ -34,13 +31,25 @@ def automato():
         qErro()
 
 def obterAlfabeto():
+    """
+    Captura a palavra que estiver na Entry e guarda-a numa String.
+
+    Posteriormente, retorna a palavra para o método que a chamou.
+    :return: alfabeto
+    """
     print(ed1.get())  # teste dispensável
     alfabeto = ed1.get()  # guarda conteúdo lido numa string
     return alfabeto
 
-
-#  esboço da função de transição
 def q0(alfabeto):
+    """
+    Implementa toda lógica necessária ao controle do estado inicial 'q0'.
+
+    O primeiro símbolo do alfabeto deve ser, necessariamente
+    um 'abre-chaves', do contrário, a entrada já é considerada errada.
+    :param alfabeto:
+    :return: void
+    """
     i = 0  # marca índice da string lida (cadeia de simbolos da fita)
     print("i em q0: %i, alfabeto %s, simbolo %s" % (i, alfabeto, alfabeto[i]))
     if ((alfabeto[i] == '{') and len(alfabeto) > 1):
@@ -50,6 +59,15 @@ def q0(alfabeto):
 
 
 def q1(alfabeto, i):
+    """
+    Implementação do estado 'q1'.
+
+    Se o alfabeto informado esiver correto,
+    o símbolo informado aqui, deverá ser exclusivamente alfanumérico.
+    :param alfabeto:
+    :param i:
+    :return: void
+    """
     print("i em q1: %i, alfabeto %s, simbolo %s" % (i, alfabeto, alfabeto[i]))
     if i <= len(alfabeto)-2:
         if verAlphaNumeric(alfabeto, i):
@@ -61,6 +79,15 @@ def q1(alfabeto, i):
 
 
 def q2(alfabeto, i):
+    """
+    Implementação das regras definidas para estado 'q2'.
+
+    Se o alfabeto informado estiver correto, o símbolo processado aqui
+    deverá ser uma vírgula.
+    :param alfabeto:
+    :param i:
+    :return:
+    """
     print("i em q2: %i, alfabeto %s, simbolo %s" % (i, alfabeto, alfabeto[i]))
     if i <= len(alfabeto)-1:
         if alfabeto[i] == ',' and i < len(alfabeto)-1:
@@ -74,28 +101,54 @@ def q2(alfabeto, i):
 
 
 def q3(alfabeto, i):
+    """
+    Implementação das regras definidas para estado 'q3'.
+
+    Lembrando que este é o último estado, ou seja,
+    este é o estado de aceitação. É nele que está contido o teste
+    para confirmar se o alfabeto informado é aceito ou rejeitado.
+    :param alfabeto:
+    :param i:
+    :return:
+    """
     print("i em q3: %i, alfabeto %s, simbolo %s" % (i, alfabeto, alfabeto[i]))
     if i == len(alfabeto)-1:  # teste redundante, .: desnecessário
-        tkMessageBox.showinfo("Informação", "Alfabeto aceito!")
+        messagebox.showinfo("Informação", "Alfabeto aceito!")
         # empilhando alfabeto dentro do listbox:
-        lbox1.insert(END, alfabeto)
-        #text1.insert(END, alfabeto)
+        indice = 0
+        lbox1.insert(indice, alfabeto)
+        indice += indice
     else:
         qErro()
 
 
 def qErro():
-    tkMessageBox.showerror("Erro", "Faltam ou sobram parâmetros")
+    """
+    Estado de erro.
+
+    Não faz nada a não ser, mostrar esta mensagem na tela e interromper
+    o processo de transições de estados.
+    :return:
+    """
+    messagebox.showerror("Erro", "Faltam ou sobram parâmetros")
 
 
 #  método que remove os espaços
 def removeSpace():
+    """
+    Procura e encontra todos os espaços, e troca-os por 'nada'.
+    :return: alfabeto
+    """
     alfabeto = obterAlfabeto().replace(" ", "")
     return alfabeto
 
 
-#  método que verifica se há repetição de símbolos no alfabeto
 def verRepeticao(alfabeto):
+    """
+    Verifica se há alfanuméricos repetidos no alfabeto.
+    :param alfabeto:
+    :return: Boolean
+    """
     tam = len(alfabeto)-1
     for i in range(tam):
         for j in range(i+1,tam,1):
@@ -106,8 +159,18 @@ def verRepeticao(alfabeto):
     return False # não encontrou repetição
 
 
-#  método que testa se o símbolo está entre A,...,Z ou a,...,z ou 0,...,9
+#
 def verAlphaNumeric(alfabeto, i):
+    """
+    Verifica se o símbolo de entrada é alfanumérico.
+
+    Este método testa se o símbolo está entre A,...,Z
+                                           ou a,...,z
+                                           ou 0,...,9
+    :param alfabeto:
+    :param i:
+    :return:
+    """
     if (ord(alfabeto[i]) >= 65 and ord(alfabeto[i]) <= 90) \
             or (ord(alfabeto[i]) >= 97 and ord(alfabeto[i]) <= 122) \
             or (ord(alfabeto[i]) >= 48 and ord(alfabeto[i]) <= 57):
@@ -123,9 +186,11 @@ def unirAlfabetos():
 
 
 #  AQUI INICIA A IMPLEMENTAÇÃO DA PARTE GRÁFICA
-#  seperar da parte de negócios (este deve ser uma classe bem definida)
 Janela = tk.Tk()  # instancia da Janela Principal (mainWindow)
-
+"""
+Posteriomente, separar este método em uma classe separada
+e trabalhar com implementação OO e GUI.
+"""
 #  principais frames (conteiners) da tela principal
 frame1 = Frame(Janela, height=100, bg="")
 frame2 = Frame(Janela, width=100, bg="")  # bg="" é desnecessário aqui

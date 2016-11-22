@@ -1,44 +1,52 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3.5
 # -*- coding: utf-8 -*-
 
-# author: Eufrázio Alexandre & Johnny Pereira
-# email: (eufrazius,johnnyuft)@gmail.com
-# last modified: November 2016
+"""
+author: Eufrázio Alexandre & Johnny Pereira
+email: (eufrazius,johnnyuft)@gmail.com
+last modified: November 2016
+"""
+
 
 # pacotes importados
-from Tkinter import *
-import Tkinter as tk
-import tkMessageBox
+from tkinter import *
+import tkinter as tk
+from tkinter import messagebox
 import string
 import sys
 
-'''''
-Este trabalho tem por objetivo SIMULAR a implementação
-de um AFND que possui as seguintes características:
+"""
+    Este trabalho tem por objetivo SIMULAR a implementação
+
+    de um AFND que possui as seguintes características:
     reconhecer w sobre o alfabeto 'a','b' | w tenha 'a' como
     antepenúltimo símbolo.
-'''''
+"""
 
-'''''
-Aqui temos o método que captura a entrada,
-utilizando os componentes de interface gráfica com
- o usuário.
-'''''
+
 def getEntrada():
+    """
+    Aqui temos o método que captura a entrada (palavra),
+
+    utilizando os componentes de interface gráfica com
+    o usuário. Este método é chamado pelo método removeSpace().
+    E chama o método Automato() passando a palavra lida como parâmetro.
+    :return:
+    """
     palavra = ed1.get()
     print("Palavra informada "+palavra)
     Automato(palavra)
 
-'''''
-Aqui temos o método que se encarrega de capturada a entrada do usuário,
-enviá-la para processamento e posteriormente analisar o estado de retorno
-como sendo 'de aceitação' ou 'de NÃO aceitação'
-'''''
-def Automato(palavra):
-    # chamada para Função de Transição
-    #estadoAtual = fTransicao('q0','a')
-    #print("Retornou %s\n"%estadoAtual)
 
+def Automato(palavra):
+    """
+    Aqui temos o método que se encarrega de capturada a entrada do usuário,
+
+    enviá-la para processamento e posteriormente analisar o estado de retorno
+    como sendo 'de aceitação' ou 'de NÃO aceitação'
+    :param palavra:
+    :return:
+    """
     # chamada para Função de Transição Estendida
     lEstados = ['q0'] # declaração e inicialização, tipo lista
     estadosFinais = fEstendida(lEstados, palavra)
@@ -48,18 +56,21 @@ def Automato(palavra):
 
     # teste final:
     if 'q3' in estadosFinais:
-        #print("Palavra aceita pela linguagem ")
-        tkMessageBox.showinfo("Info", "palavra aceita! ")
+        messagebox.showinfo("Info", "palavra aceita! ")
     else:
-        #print("Palavra rejeitada pela linguagem ")
-        tkMessageBox.showerror("Erro", "palavra rejeitada! ")
+        messagebox.showerror("Erro", "palavra rejeitada! ")
 
-'''''
-Aqui temos o método que implementa a Função de Transição
-para o AFND em questão: "Autômato que reconhece palavras sobre
-alfabeto 'a' 'b' que possuam 'a' como ANTEPENÚLTIMO símbolo"
-'''''
+
 def fTransicao(estado, simbolo):
+    """
+    Aqui temos o método que implementa a Função de Transição
+
+    para o AFND em questão: "Autômato que reconhece palavras sobre
+    alfabeto 'a' 'b' que possuam 'a' como ANTEPENÚLTIMO símbolo"
+    :param estado:
+    :param simbolo:
+    :return:
+    """
     if(estado=='q0'):
         if(simbolo=='a'):
             return ['q0','q1']
@@ -81,12 +92,16 @@ def fTransicao(estado, simbolo):
     else:
         return ['qErro']
 
-'''''
-Aqui temos o método que 'simula' a implementação
-da Função de Transição Estendida
-para os AFNDs
-'''''
+
 def fEstendida(lEstados, palavra):
+    """
+    Aqui temos o método que 'simula' a implementação
+
+    da Função de Transição Estendida para os AFNDs
+    :param lEstados:
+    :param palavra:
+    :return:
+    """
     # teste dispensável
     print("Estado Atual: %s - Palavra atual: %s "%(lEstados, palavra))
     # Base
@@ -106,11 +121,13 @@ def fEstendida(lEstados, palavra):
             return fEstendida(lista1, x)
 
 
-'''''
-Aqui jaz, a implementação dos componentes visuais bem como a organização
-dos mesmos. Tecnologia utilizada: Tkinter GUI (Python).
-'''''
+
 Janela = tk.Tk()  # instancia da Janela Principal (mainWindow)
+"""
+Aqui jaz, a implementação dos componentes visuais bem como a organização
+
+dos mesmos. Tecnologia utilizada: Tkinter GUI (Python).
+"""
 
 #  principais frames (conteiners) da tela principal
 frame1 = Frame(Janela, height=100, bg="")
