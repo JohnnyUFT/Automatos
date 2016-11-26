@@ -116,7 +116,7 @@ def q3(alfabeto, i):
         messagebox.showinfo("Informação", "Alfabeto aceito!")
         # empilhando alfabeto dentro do listbox:
         indice = 0
-        lbox1.insert(indice, alfabeto)
+        lbox1.insert(END, alfabeto)# falta colocar índice
         indice += indice
     else:
         qErro()
@@ -174,6 +174,7 @@ def verAlphaNumeric(alfabeto, i):
     if (ord(alfabeto[i]) >= 65 and ord(alfabeto[i]) <= 90) \
             or (ord(alfabeto[i]) >= 97 and ord(alfabeto[i]) <= 122) \
             or (ord(alfabeto[i]) >= 48 and ord(alfabeto[i]) <= 57):
+            #possivel chamada ao método que guarda os alfanuméricos.
         return True
     return False
 
@@ -181,7 +182,24 @@ def verAlphaNumeric(alfabeto, i):
 # método que trabalha a união dos alfabetos
 # removendo os símbolos repetidos
 def unirAlfabetos():
-    pass
+    i = lbox1.size()
+    lista1 = lbox1.get(0,i)# captura primeiro ao último elemento da lista
+    print(lista1)
+    # tratamento para novo alfabeto:
+    for elemento in lista1:
+        # utilizar métodos de String: isalpha e/ou isnumeric
+        if(elemento.isalnum()):# não está funcionando ainda
+            lista2 = elemento
+    print(lista2)
+    # leva o alfabeto gerado pela união à listbox:
+    lbox1.insert(END, lista1)
+
+def verificaPalavra():
+    """
+    Captura a palavra informada pelo usuário e veririfica a quais alfabetos
+    a mesma pertence.
+    """
+    palavra = ed2.get()
 
 
 
@@ -219,7 +237,7 @@ lbox1 = Listbox(frame3, height=7)
 bt2 = Button(frame3, text="Unir alfabetos ", font=fonte1, command=unirAlfabetos)
 lb5 = Label(frame3, text="Palavra: ", font=fonte1)
 ed2 = Entry(frame3, text="", font=fonte1)
-bt3 = Button(frame3, text="Verificar", font=fonte1)
+bt3 = Button(frame3, text="Verificar", font=fonte1, command=verificaPalavra)
 bt4 = Button(frame3, text="Prefixos", font=fonte1)
 bt5 = Button(frame3, text="Sufixos", font=fonte1)
 bt6 = Button(frame3, text="Subpalavras", font=fonte1)
