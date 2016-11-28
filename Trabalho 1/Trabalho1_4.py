@@ -23,7 +23,7 @@ def automato():
     para a função que verifica se há repetições, estando tudo certo, envia a palavra para estado 'q0'.
     :return:
     """
-    alfabeto1 = removeSpace() # remove os espaços em branco
+    alfabeto1 = removeEspacos() # remove os espaços em branco
     repetidos = verRepeticao(alfabeto1) # verifica repetição de símbolos
     if(not repetidos):
         q0(alfabeto1)  # começa pelo q0() que é o estado inicial
@@ -70,7 +70,7 @@ def q1(alfabeto, i):
     """
     print("i em q1: %i, alfabeto %s, simbolo %s" % (i, alfabeto, alfabeto[i]))
     if i <= len(alfabeto)-2:
-        if verAlphaNumeric(alfabeto, i):
+        if verAlfaNumerico(alfabeto, i):
             q2(alfabeto, i+1)
         else:
             qErro()
@@ -134,7 +134,7 @@ def qErro():
 
 
 #  método que remove os espaços
-def removeSpace():
+def removeEspacos():
     """
     Procura e encontra todos os espaços, e troca-os por 'nada'.
     :return: alfabeto
@@ -146,24 +146,19 @@ def removeSpace():
 def verRepeticao(alfabeto):
     """
         Verifica se há alfanuméricos repetidos no alfabeto.
-    Fazer modificação para que este método remova os
-    elementos repetidos e aceite o alfabeto resultante, caso possível
     :param: alfabeto
-    :return: str
+    :return: booleano
     """
     tam = len(alfabeto)-1
     for i in range(tam):
         for j in range(i+1,tam,1):
             if(alfabeto[i] == alfabeto[j] and alfabeto[i] != ','):
-                # tratar símbolos repetidos
-                print("Símbolos repetidos: %s"%alfabeto[i])
-                #alfabeto1 =
                 return True # encontrou símbolos repetidos
     return False # não encontrou repetição
 
 
 #
-def verAlphaNumeric(alfabeto, i):
+def verAlfaNumerico(alfabeto, i):
     """
     Verifica se o símbolo de entrada é alfanumérico.
 
@@ -194,7 +189,7 @@ def unirAlfabetos():
     #lista2 = ["{"]
     lista2 = [chr(123)]
     for i in range(len(palavra1)):
-        if (verAlphaNumeric(palavra1, i)):# tratar repetição nas próximas linhas
+        if (verAlfaNumerico(palavra1, i)):# tratar repetição nas próximas linhas
             lista2.append(palavra1[i])
             lista2.append(',')
     #lista2[-1] = "}"
@@ -203,7 +198,7 @@ def unirAlfabetos():
     # verificando se há símbolos repetidos no alfabeto unido:
     for i in range(len(lista2)):
         if (verRepeticao(str(lista2))):
-            #del lista2[i]
+
             pass
 
     # leva o alfabeto gerado pela união à listbox:
@@ -272,7 +267,6 @@ ed1 = Entry(frame3, text="", font=fonte1)  # trabalhar a função obterAlfabeto 
 bt1 = Button(frame3, text="Inserir", font=fonte1, command=automato)
 lb4 = Label(frame3, text="Lista de alfabetos: ", font=fonte1)
 lbox1 = Listbox(frame3, height=7)
-#text1 = Text(frame3, height=7)
 bt2 = Button(frame3, text="Unir alfabetos ", font=fonte1, command=unirAlfabetos)
 lb5 = Label(frame3, text="Palavra: ", font=fonte1)
 ed2 = Entry(frame3, text="", font=fonte1)
@@ -287,12 +281,11 @@ ed1.grid(row=1, column=0)
 bt1.grid(row=1, column=1)
 lb4.grid(row=2, column=0, stick=W)
 lbox1.grid(row=3, column=0)
-#text1.grid(row=3, column=0)
 bt2.grid(row=4, column=0)  # e as linhas do listbox? resp: não interferem nesta "contagem"
 lb5.grid(row=5, column=0, stick=W)
 ed2.grid(row=6, column=0)
 bt3.grid(row=6, column=1)
-bt4.grid(row=7, column=0, stick=W)  # cuidar com as disposições destes botões
+bt4.grid(row=7, column=0, stick=W)
 bt5.grid(row=7, column=1)
 bt6.grid(row=7, column=2, stick=E)
 
