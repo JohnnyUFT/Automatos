@@ -77,12 +77,12 @@ def fTransicao(estado, simbolo):
         elif(simbolo=='b'):
             return ['q0']
         else:
-            return 'qErr0'
+            return ['qErr0']
     elif(estado=='q1'):
         if(simbolo=='a' or simbolo=='b'):
             return ['q2']
         else:
-            return 'qErr0'
+            return ['qErr0']
     elif (estado == 'q2'):
         if (simbolo == 'a' or simbolo == 'b'):
             return ['q3']

@@ -13,8 +13,23 @@ from tkinter import *
 import tkinter as tk
 from tkinter import messagebox
 import string
-from  PIL  import  Image # desnecessário, talvez?
-import sys
+import PIL
+from PIL import ImageTk, Image
+from tkinter import PhotoImage
+import sys # desnecessário, talvez?
+from tkinter import messagebox
+
+def obterAlfbabeto():
+    alfabeto = ent1.get()
+    print(alfabeto)
+
+def obterPalavra():
+    palavra = ent5.get()
+    print(palavra)
+    analisaPalavra(palavra)
+
+def analisaPalavra(palavra):
+    messagebox.showinfo("Informação", "Palavra aceita!")
 
 #  AQUI INICIA A IMPLEMENTAÇÃO DA PARTE GRÁFICA
 Janela = tk.Tk()  # instancia da Janela Principal (mainWindow)
@@ -23,13 +38,13 @@ Posteriomente, separar este método em uma classe separada
 e trabalhar com implementação OO e GUI.
 """
 #  principais frames (conteiners) da tela principal
-frame1 = Frame(Janela, height=100, bg="")
+frame1 = Frame(Janela, height=100, bg="white")
 frame2 = Frame(Janela, height=100, bg="")
 frame3 = Frame(Janela, height=100, bg="")
-frame4 = Frame(Janela, height=100, bg="")
+frame4 = Frame(Janela, height=100, bg="white")
 frame5 = Frame(Janela, height=100, bg="")
-frame6 = Frame(Janela, width=30, bg="green")# serve apenas para definir uma margem
-frame7 = Frame(Janela, width=30, bg="green")# serve apenas para definir uma margem
+frame6 = Frame(Janela, width=30, bg="")# serve apenas para definir uma margem
+frame7 = Frame(Janela, width=30, bg="")# serve apenas para definir uma margem
 
 # empacotamento e disposição em que aparecem na tela
 frame1.pack(side=TOP, fill=X)
@@ -43,13 +58,17 @@ frame4.pack(side=TOP, fill=X)
 fonte1 = ('Ubuntu', '10')
 # elementos contidos no frame1
 lb1 = Label(frame1, text='UNIVERSIDADE FEDERAL DO TOCANTINS \n Ciência da Computação',
-            font=('Ubuntu', '12', 'bold'), height=6) # , bg="white"
-lb1.pack()
+            font=('Ubuntu', '12', 'bold'), height=6, bg="white")
+logo = Image.open("uft4.jpg")
+photo1 = ImageTk.PhotoImage(logo)
+lb11 = Label(frame1, image=photo1)
+lb1.grid(row=0, column=1, stick=W)
+lb11.grid(row=0, column=0, stick=W)
 
 #  elementos contidos no frame2
 lb2 = Label(frame2, text="Alfabeto: ", font=fonte1)
 ent1 = Entry(frame2, text="", font=fonte1)
-bt1 = Button(frame2, text="Ok ", font=fonte1)
+bt1 = Button(frame2, text="Ok ", font=fonte1, command=obterAlfbabeto)
 lb3 = Label(frame2, text="Qtd estados: ", font=fonte1)
 ent2 = Entry(frame2, text="", font=fonte1)
 lb4 = Label(frame2, text="Estado Inicial: ", font=fonte1)
@@ -62,12 +81,12 @@ lb6 = Label(frame3, text="Função de Transição: ", font=fonte1)
 lbox1 = Listbox(frame3, height=7)# trocar por treeview
 lb8 = Label(frame3, text="Palavra informada:")
 ent5 = Entry(frame3, text="", font=fonte1)
-btn2 = Button(frame3, text="Inserir e Processar")
+btn2 = Button(frame3, text="Inserir e Processar", command=obterPalavra)
 
 # frame4 possui apenas uma imagem (caráter decorativo)
-image = Image.open("content.gif")
+image = Image.open("cinema.png")
 photo = ImageTk.PhotoImage(image)
-lb9 = Label(frame4, image=photo)
+lb9 = Label(frame4, image=photo, bg="white")
 
 # elementos contidos no frame5
 # refazer isso aqui
@@ -100,5 +119,5 @@ lb10.grid(row=0, column=0, stick=E+W)# apenas para teste, remover depois
 
 Janela.title("Linguagens Formais & Autômatos - Trabalho #3")
 #  Largura x Altura + Esquerda + Topo
-Janela.geometry("700x510+300+100")
+Janela.geometry("700x550+300+100")
 Janela.mainloop()
