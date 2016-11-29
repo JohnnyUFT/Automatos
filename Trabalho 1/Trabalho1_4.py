@@ -173,17 +173,24 @@ def verAlfaNumerico(alfabeto, i):
     return False
 
 def unirAlfabetos():
+    """
+    Refazer essa bagaça aqui.
+    """
     i = lbox1.size()
-    lista1 = lbox1.get(0, i)# captura primeiro ao último elemento da lista
-    palavra = str(lista1)
+    tupla1 = lbox1.get(0, i)# captura primeiro ao último elemento da lista
+    palavra = str(tupla1)
+
     # tratamento para novo alfabeto:
     lista2 = []# declara lista vazia
     for i in range(len(palavra)):
-        # símbolos repetidos deveriam ser tratados aqui
         if (verAlfaNumerico(palavra, i)):
             lista2.append(palavra[i])
+    conjunto1 = set(lista2)# garante a não repetição de elementos
+    print(type(conjunto1))
+    print(conjunto1)
+    novaPalavra = '{' + ', '.join(conjunto1) + '}'
     # insere a uniao de símbolos, de volta á listbox
-    lbox1.insert(END, set(lista2))
+    lbox1.insert(END, novaPalavra)
 
 def verificaPalavra():
     """
@@ -191,8 +198,25 @@ def verificaPalavra():
     a mesma pertence.
     :return: void
     """
+    # converte a palavra em um "conjunto" de caracteres, separados.
     palavra = ed2.get()
-    pass
+    i = lbox1.size() # captura o comprimento da listbox
+    lista1 = lbox1.get(0, i)# captura tudo que há na listbox
+
+    lista2 = []# apenas para guadar os indices dos alfabetos
+    i = 1 # marca indice dos alfabetos
+    for alfabeto in lista1:
+        lidoOk = 0 # marca indice na palavra
+        for simbolo in palavra:
+            if(simbolo in alfabeto):
+                lidoOk+=1
+            if(lidoOk==len(palavra)):
+                    lista2.append(i)
+        i+=1
+    if(lista2):
+        messagebox.showinfo("Pertence", "Palavra pertence a %s"%lista2)
+    else:
+        messagebox.showerror("Não Pertence", "Palavra pertence a nenhum")
 
 def prefixos():
     """
@@ -200,9 +224,12 @@ def prefixos():
     :return: void
     """
     palavra = ed2.get()
-    print(chr(38))
+    lista = [chr(38)]
     for i in range(1,len(palavra)+1):
-        print(palavra[:i])
+        #print(palavra[:i])
+        lista.append(palavra[:i])
+    lista2 = sorted(set(lista), key=len)
+    messagebox.showinfo("Prefixos", lista2)
 
 
 def sufixos():
@@ -211,9 +238,12 @@ def sufixos():
     :return: void
     """
     palavra = ed2.get()
-    print(chr(38))
+    lista = [chr(38)]
     for i in range(len(palavra)-1, -1, -1):
-        print(palavra[i:])
+        lista.append(palavra[i:])
+    # set: remove repetidos, sorted: ordena, por tamanho (key=len).
+    lista2 = sorted(set(lista), key=len)
+    messagebox.showinfo("Sufixos", lista2)
 
 def subpalavras():
     """
@@ -221,7 +251,13 @@ def subpalavras():
     :return: void
     """
     palavra = ed2.get()
-    pass
+    comp = len(palavra)
+    lista = [chr(38)]
+    for i in range(comp):
+      for j in range(i,comp):
+        lista.append(palavra[i:j+1])
+    lista2 = sorted(set(lista), key=len)
+    messagebox.showinfo("Subpalavras", lista2)
 
 Janela = tk.Tk()  # instancia da Janela Principal (mainWindow)
 """
