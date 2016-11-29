@@ -16,17 +16,18 @@ import string
 
 def automato():
     """
-    Recebe a palavra informada, sem espaços e a envia para processamento em 'q0'.
+    Recebe a palavra informada, retira espaços e a envia para processamento em 'q0'.
 
     Este método trabalha como se fosse o método principal
     do projeto, ele recebe a palavra, já trabalhada sobre os espaços e envia a mesma
-    para a função que verifica se há repetições, estando tudo certo, envia a palavra para estado 'q0'.
-    :return:
+    para a função que verifica se há repetições, estando tudo certo, envia a palavra
+     para o estado 'q0'.
+    :return: void
     """
     alfabeto1 = removeEspacos() # remove os espaços em branco
     repetidos = verRepeticao(alfabeto1) # verifica repetição de símbolos
     if(not repetidos):
-        q0(alfabeto1)  # começa pelo q0() que é o estado inicial
+        q0(alfabeto1)  # começa pelo q0() pois é o estado inicial
     else:
         qErro()
 
@@ -35,7 +36,7 @@ def obterAlfabeto():
     Captura a palavra que estiver na Entry e guarda-a numa String.
 
     Posteriormente, retorna a palavra para o método que a chamou.
-    :return: alfabeto
+    :return: str
     """
     print(ed1.get())  # teste dispensável
     alfabeto = ed1.get()  # guarda conteúdo lido numa string
@@ -47,10 +48,10 @@ def q0(alfabeto):
 
     O primeiro símbolo do alfabeto deve ser, necessariamente
     um 'abre-chaves', do contrário, a entrada já é considerada errada.
-    :param alfabeto:
+    :param alfabeto: str
     :return: void
     """
-    i = 0  # marca índice da string lida (cadeia de simbolos da fita)
+    i = 0  # marca índice da string (cadeia de simbolos da fita)
     print("i em q0: %i, alfabeto %s, simbolo %s" % (i, alfabeto, alfabeto[i]))
     if ((alfabeto[i] == '{') and len(alfabeto) > 1):
         q1(alfabeto, i + 1)
@@ -62,10 +63,10 @@ def q1(alfabeto, i):
     """
     Implementação do estado 'q1'.
 
-    Se o alfabeto informado esiver correto,
+    Se o alfabeto informado estiver correto,
     o símbolo informado aqui, deverá ser exclusivamente alfanumérico.
-    :param alfabeto:
-    :param i:
+    :param alfabeto: str
+    :param i: int
     :return: void
     """
     print("i em q1: %i, alfabeto %s, simbolo %s" % (i, alfabeto, alfabeto[i]))
@@ -84,9 +85,9 @@ def q2(alfabeto, i):
 
     Se o alfabeto informado estiver correto, o símbolo processado aqui
     deverá ser uma vírgula.
-    :param alfabeto:
-    :param i:
-    :return:
+    :param alfabeto: str
+    :param i: int
+    :return: void
     """
     print("i em q2: %i, alfabeto %s, simbolo %s" % (i, alfabeto, alfabeto[i]))
     if i <= len(alfabeto)-1:
@@ -104,15 +105,14 @@ def q3(alfabeto, i):
     """
     Implementação das regras definidas para estado 'q3'.
 
-    Lembrando que este é o último estado, ou seja,
-    este é o estado de aceitação. É nele que está contido o teste
+    Este é o estado de aceitação. É nele que está contido o teste
     para confirmar se o alfabeto informado é aceito ou rejeitado.
-    :param alfabeto:
-    :param i:
-    :return:
+    :param alfabeto: str
+    :param i: int
+    :return: void
     """
     print("i em q3: %i, alfabeto %s, simbolo %s" % (i, alfabeto, alfabeto[i]))
-    if i == len(alfabeto)-1:  # teste redundante, .: desnecessário
+    if i == len(alfabeto)-1:
         messagebox.showinfo("Informação", "Alfabeto aceito!")
         # empilhando alfabeto dentro do listbox:
         indice = 0
@@ -127,27 +127,25 @@ def qErro():
     Estado de erro.
 
     Não faz nada a não ser, mostrar esta mensagem na tela e interromper
-    o processo de transições de estados.
-    :return:
+    o processo de transições entre os estados.
+    :return: void
     """
     messagebox.showerror("Erro", "Faltam ou sobram parâmetros")
 
-
-#  método que remove os espaços
 def removeEspacos():
     """
-    Procura e encontra todos os espaços, e troca-os por 'nada'.
-    :return: alfabeto
+    Procura por todos os espaços e encontrando-os,
+    troca-os por 'nada'.
+    :return: str
     """
     alfabeto = obterAlfabeto().replace(" ", "")
     return alfabeto
 
-
 def verRepeticao(alfabeto):
     """
-        Verifica se há alfanuméricos repetidos no alfabeto.
+    Verifica se há alfanuméricos repetidos no alfabeto.
     :param: alfabeto
-    :return: booleano
+    :return: boolean
     """
     tam = len(alfabeto)-1
     for i in range(tam):
@@ -156,58 +154,42 @@ def verRepeticao(alfabeto):
                 return True # encontrou símbolos repetidos
     return False # não encontrou repetição
 
-
-#
 def verAlfaNumerico(alfabeto, i):
     """
-    Verifica se o símbolo de entrada é alfanumérico.
+    Verifica se o símbolo recebido é alfanumérico.
 
     Este método testa se o símbolo está entre A,...,Z
                                            ou a,...,z
                                            ou 0,...,9
-    :param alfabeto:
-    :param i:
-    :return:
+    :param alfabeto: str
+    :param i: int
+    :return: boolean
     """
-    print("Em verAlphaNumeric: %s, %d "%(alfabeto, i))
+    #print("Em verAlphaNumeric: %s, %d "%(alfabeto, i))
     if (ord(alfabeto[i]) >= 65 and ord(alfabeto[i]) <= 90) \
             or (ord(alfabeto[i]) >= 97 and ord(alfabeto[i]) <= 122) \
             or (ord(alfabeto[i]) >= 48 and ord(alfabeto[i]) <= 57):
-            #possivel chamada ao método que guarda os alfanuméricos.
         return True
     return False
 
-
-# método que trabalha a união dos alfabetos
-# removendo os símbolos repetidos
 def unirAlfabetos():
     i = lbox1.size()
-    lista1 = lbox1.get(0,i)# captura primeiro ao último elemento da lista
-    palavra1 = str(lista1)
-    print(palavra1, type(palavra1))
+    lista1 = lbox1.get(0, i)# captura primeiro ao último elemento da lista
+    palavra = str(lista1)
     # tratamento para novo alfabeto:
-    #lista2 = ["{"]
-    lista2 = [chr(123)]
-    for i in range(len(palavra1)):
-        if (verAlfaNumerico(palavra1, i)):# tratar repetição nas próximas linhas
-            lista2.append(palavra1[i])
-            lista2.append(',')
-    #lista2[-1] = "}"
-    lista2[-1] = chr(125)
-
-    # verificando se há símbolos repetidos no alfabeto unido:
-    for i in range(len(lista2)):
-        if (verRepeticao(str(lista2))):
-
-            pass
-
-    # leva o alfabeto gerado pela união à listbox:
-    lbox1.insert(END, lista2) # este deve ser tratado antes de ser enviado
+    lista2 = []# declara lista vazia
+    for i in range(len(palavra)):
+        # símbolos repetidos deveriam ser tratados aqui
+        if (verAlfaNumerico(palavra, i)):
+            lista2.append(palavra[i])
+    # insere a uniao de símbolos, de volta á listbox
+    lbox1.insert(END, set(lista2))
 
 def verificaPalavra():
     """
-    Captura a palavra informada pelo usuário e veririfica a quais alfabetos
+    Captura a palavra informada pelo usuário e verifica a quais alfabetos
     a mesma pertence.
+    :return: void
     """
     palavra = ed2.get()
     pass
@@ -215,38 +197,44 @@ def verificaPalavra():
 def prefixos():
     """
     Imprime os prefixos da palavra informada.
+    :return: void
     """
     palavra = ed2.get()
-    palavra2 = chr(38)
-    print(palavra2)
-    for i in range(len(palavra)+1):
+    print(chr(38))
+    for i in range(1,len(palavra)+1):
         print(palavra[:i])
 
 
 def sufixos():
     """
-    Imprime os prefixos da palavra informada.
+    Imprime os sufixos da palavra informada.
+    :return: void
     """
     palavra = ed2.get()
-    palavra2 = chr(38)
-    print(palavra2)
+    print(chr(38))
     for i in range(len(palavra)-1, -1, -1):
         print(palavra[i:])
 
 def subpalavras():
+    """
+    Imprime as subpalavras da palavra informada.
+    :return: void
+    """
     palavra = ed2.get()
     pass
 
-#  AQUI INICIA A IMPLEMENTAÇÃO DA PARTE GRÁFICA
 Janela = tk.Tk()  # instancia da Janela Principal (mainWindow)
 """
-Posteriomente, separar este método em uma classe separada
-e trabalhar com implementação OO e GUI.
+    Implementação da interface gráfica.
+
+    Posteriomente, separar este método em uma classe
+    e trabalhar com implementação OO e GUI.
+
 """
 #  principais frames (conteiners) da tela principal
 frame1 = Frame(Janela, height=100, bg="")
-frame2 = Frame(Janela, width=100, bg="")  # bg="" é desnecessário aqui
-frame3 = Frame(Janela, height=100, bg="")  # height é desnecessário aqui
+frame2 = Frame(Janela, width=100, bg="")
+frame3 = Frame(Janela, height=100, bg="")
 frame4 = Frame(Janela, width=100, bg="")
 
 frame1.pack(side=TOP, fill=X)
@@ -255,10 +243,10 @@ frame4.pack(side=RIGHT, fill=Y)
 frame3.pack(fill=BOTH)
 
 #  configuração de fonte, permanente para labels e outros
-fonte1 = ('Ubuntu', '10')
+fonte1 = ('Monaco', '10')
 
 lb1 = Label(frame1, text='UNIVERSIDADE FEDERAL DO TOCANTINS \n Ciência da Computação',
-            font=('Ubuntu', '12', 'bold'), height=6) # , bg="white"
+            font=('Monaco', '12', 'bold'), height=6)
 lb1.pack()
 
 #  elementos contidos no frame 3 (o do meio)
@@ -266,7 +254,7 @@ lb3 = Label(frame3, text="Entrada (alfabeto): ", font=fonte1)
 ed1 = Entry(frame3, text="", font=fonte1)  # trabalhar a função obterAlfabeto - em outro arquivo, de preferência
 bt1 = Button(frame3, text="Inserir", font=fonte1, command=automato)
 lb4 = Label(frame3, text="Lista de alfabetos: ", font=fonte1)
-lbox1 = Listbox(frame3, height=7)
+lbox1 = Listbox(frame3, width=25, height=7)
 bt2 = Button(frame3, text="Unir alfabetos ", font=fonte1, command=unirAlfabetos)
 lb5 = Label(frame3, text="Palavra: ", font=fonte1)
 ed2 = Entry(frame3, text="", font=fonte1)
@@ -275,13 +263,13 @@ bt4 = Button(frame3, text="Prefixos", font=fonte1, command=prefixos)
 bt5 = Button(frame3, text="Sufixos", font=fonte1, command=sufixos)
 bt6 = Button(frame3, text="Subpalavras", font=fonte1, command=subpalavras)
 
-#  disposição de todos os widgets do frame (conteiner) nº 3 (odo meio)
+#  disposição de todos os widgets do frame (conteiner) nº 3 (do meio)
 lb3.grid(row=0, column=0, stick=W)
 ed1.grid(row=1, column=0)
 bt1.grid(row=1, column=1)
 lb4.grid(row=2, column=0, stick=W)
 lbox1.grid(row=3, column=0)
-bt2.grid(row=4, column=0)  # e as linhas do listbox? resp: não interferem nesta "contagem"
+bt2.grid(row=4, column=0)  # as linhas do litbox não interferem nesta contagem
 lb5.grid(row=5, column=0, stick=W)
 ed2.grid(row=6, column=0)
 bt3.grid(row=6, column=1)
@@ -291,5 +279,5 @@ bt6.grid(row=7, column=2, stick=E)
 
 Janela.title("Linguagens Formais & Autômatos - Trabalho #1")
 #  Largura x Altura + Esquerda + Topo
-Janela.geometry("560x510+300+100")
+Janela.geometry("620x510+300+100")
 Janela.mainloop()
